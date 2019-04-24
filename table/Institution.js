@@ -1,10 +1,9 @@
 
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./mydb.db');
+var database = require('../config')
 
 exports.getInstitution = function (req, res) {
     var sqlRequest = "SELECT * FROM Institution";
-    db.all(sqlRequest, function (err, rows) {
+    database.db.all(sqlRequest, function (err, rows) {
         if (err) {
             res.json({ status: false, data: "Internal server error"});
         } else if (rows === null || rows.length === 0) {
@@ -23,7 +22,7 @@ exports.createInstitution = function (req, res) {
         $Ins_Address: req.body.Ins_Address,
         $Ins_Tel: req.body.Ins_Tel,
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Entity not found" });
@@ -42,7 +41,7 @@ exports.updateInstitutionById = function (req, res) {
         $Ins_Address: req.body.Ins_Address,
         $Ins_Tel: req.body.Ins_Tel,
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Internal server error" });
@@ -57,7 +56,7 @@ exports.deleteInstitutionById = function (req, res) {
     let sqlParams = {
         $id:req.body.id,
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Internal server error" });

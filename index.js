@@ -43,6 +43,12 @@ app.use(function (req, res, next) {
 });
 app.set('view engine','ejs');
 
+app.get('/', function (req, res) {
+    res.render('home');
+    console.log('homestart ');
+});
+
+
 app.listen(port, function () {
     console.log('Starting node.js on port ' + port);
 });
