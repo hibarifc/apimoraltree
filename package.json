@@ -4,6 +4,6 @@
         "body-parser": "*",
         "ejs": "*",
         "express": "*",
-        "sqlite": "*",
+        "sqlite": "*"
     }
 }
