@@ -5,6 +5,5 @@
         "ejs": "*",
         "express": "*",
         "sqlite": "*",
-        "sqlite3": "^4.0.6"
     }
 }
