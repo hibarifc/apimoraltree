@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 
 /* Database configuration */
 let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('../mydb.db',(err) => {
+let db = new sqlite3.Database('../Mydb.db',(err) => {
     if (err) {
       return console.error(err.message);
     }
