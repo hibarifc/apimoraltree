@@ -1,4 +1,14 @@
 {
+    "name": "devahoy-nodejs",
+    "version": "0.0.1",
+    "description": "Devahoy Node.js with Express",
+    "main": "index.js",
+    "private": true,
+    "scripts": {
+    
+      "start": "node index.js"
+     
+    },
     "dependencies": {
         "node-pre-gyp":"*",
         "bluebird": "*",
