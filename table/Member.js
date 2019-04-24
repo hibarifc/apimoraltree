@@ -1,10 +1,9 @@
 
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./mydb.db');
+var database = require('../config')
 
 exports.getMember = function (req, res) {
     var sqlRequest = "SELECT * FROM Member";
-    db.all(sqlRequest, function (err, rows) {
+    database.db.all(sqlRequest, function (err, rows) {
         if (err) {
             res.json({ status: false, data: "Internal server error"});
         } else if (rows === null || rows.length === 0) {
@@ -25,7 +24,7 @@ exports.createMember = function (req, res) {
         $password: req.body.password,
         $Dept_ID: req.body.Dept_ID,
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Entity not found" });
@@ -44,7 +43,7 @@ exports.updateMemberById = function (req, res) {
         $Member_Status: req.body.Member_Status,
         $Dept_ID: req.body.Dept_ID,
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Internal server error" });
@@ -59,7 +58,7 @@ exports.deleteMemberById = function (req, res) {
     let sqlParams = {
         $id:req.body.id,
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Internal server error" });

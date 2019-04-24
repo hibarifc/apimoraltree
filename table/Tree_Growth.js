@@ -1,10 +1,10 @@
 
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./mydb.db');
+
+var database = require('../config')
 
 exports.getTree_Growth = function (req, res) {
     var sqlRequest = "SELECT * FROM Tree_Growth";
-    db.all(sqlRequest, function (err, rows) {
+    database.db.all(sqlRequest, function (err, rows) {
         if (err) {
             res.json({ status: false, data: "Internal server error"});
         } else if (rows === null || rows.length === 0) {
@@ -23,7 +23,7 @@ exports.createTree_Growth = function (req, res) {
         $Tree_Photo: req.body.Tree_Photo,
         $Tree_ID: req.body.Tree_ID
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Entity not found" });
@@ -42,7 +42,7 @@ exports.updateTree_GrowthById = function (req, res) {
         $Tree_Photo: req.body.Tree_Photo,
         $Tree_ID: req.body.Tree_ID
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Internal server error" });
@@ -57,7 +57,7 @@ exports.deleteTree_GrowthById = function (req, res) {
     let sqlParams = {
         $id:req.body.id,
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Internal server error" });

@@ -1,10 +1,9 @@
 
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./mydb.db');
+var database = require('../config')
 
 exports.getMoral_Tree = function (req, res) {
     var sqlRequest = "SELECT * FROM Moral_Tree";
-    db.all(sqlRequest, function (err, rows) {
+    database.db.all(sqlRequest, function (err, rows) {
         if (err) {
             res.json({ status: false, data: "Internal server error"});
         } else if (rows === null || rows.length === 0) {
@@ -21,7 +20,7 @@ exports.createMoral_Tree = function (req, res) {
         $Tree_ID: req.body.Tree_ID,
         $Tree_Name: req.body.Tree_Name,
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Entity not found" });
@@ -38,7 +37,7 @@ exports.updateMoral_TreeById = function (req, res) {
         $Tree_ID: req.body.Tree_ID,
         $Tree_Name: req.body.Tree_Name,
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Internal server error" });
@@ -53,7 +52,7 @@ exports.deleteMoral_TreeById = function (req, res) {
     let sqlParams = {
         $id:req.body.id,
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Internal server error" });

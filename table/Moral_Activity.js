@@ -1,10 +1,9 @@
 
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./mydb.db');
+var database = require('../config')
 
 exports.getMoral_Activity = function (req, res) {
     var sqlRequest = "SELECT * FROM Moral_Activity";
-    db.all(sqlRequest, function (err, rows) {
+    database.db.all(sqlRequest, function (err, rows) {
         if (err) {
             res.json({ status: false, data: "Internal server error"});
         } else if (rows === null || rows.length === 0) {
@@ -23,7 +22,7 @@ exports.createMoral_Activity = function (req, res) {
         $Moral_ID: req.body.Moral_ID,
         $Act_ID: req.body.Act_ID
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Entity not found" });
@@ -42,7 +41,7 @@ exports.updateMoral_ActivityById = function (req, res) {
         $Moral_ID: req.body.Moral_ID,
         $Act_ID: req.body.Act_ID
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Internal server error" });
@@ -57,7 +56,7 @@ exports.deleteMoral_ActivityById = function (req, res) {
     let sqlParams = {
         $id:req.body.id,
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Internal server error" });

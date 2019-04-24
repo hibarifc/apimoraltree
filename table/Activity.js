@@ -1,9 +1,8 @@
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./mydb.db');
+var database = require('../config')
 
 exports.getActivity = function (req, res) {
     var sqlRequest = "SELECT * FROM Activity";
-    db.all(sqlRequest, function (err, rows) {
+    database.db.all(sqlRequest, function (err, rows) {
         if (err) {
             res.json({ status: false, data: "Internal server error"});
         } else if (rows === null || rows.length === 0) {
@@ -22,7 +21,7 @@ exports.createActivity = function (req, res) {
         $Act_Photo: req.body.Act_Photo,
         $Ins_ID: req.body.Ins_ID,
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Entity not found" });
@@ -41,7 +40,7 @@ exports.updateActivityById = function (req, res) {
         $Act_Photo: req.body.Act_Photo,
         $Ins_ID: req.body.Ins_ID,
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Internal server error" });
@@ -56,7 +55,7 @@ exports.deleteActivityById = function (req, res) {
     let sqlParams = {
         $id:req.body.id,
     };
-    let stmt = db.prepare(sqlRequest);
+    let stmt = database.db.prepare(sqlRequest);
     stmt.run(sqlParams, function (err) {
         if (err) {
             res.json({ status: false, data: "Internal server error" });
