@@ -6,7 +6,11 @@ const bodyParser = require("body-parser");
 
 /* Database configuration */
 let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('../Mydb.db',(err) => {
+
+const path = require('path')
+const dbPath = path.resolve(__dirname, '../Mydb.db')
+// const db = new sqlite3.Database(dbPath)
+let db = new sqlite3.Database(dbPath,(err) => {
     if (err) {
       return console.error(err.message);
     }
