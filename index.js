@@ -21,11 +21,31 @@ let db = new sqlite3.Database(dbPath,(err) => {
 
 
 /* Init server listening */
-const port = process.argv[2] || 3000;
-app.listen(port, function () {
-    console.log("Server listening on port : " + port);
-});
+var port = process.env.PORT || 7777;
+//parse
+app.use(function (req, res, next) {
 
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+app.set('view engine','ejs');
+
+app.listen(port, function () {
+    console.log('Starting node.js on port ' + port);
+});
 // * LoadTable
 var Institution = require('./table/Institution.js');
 var Activity = require('./table/Activity.js');
