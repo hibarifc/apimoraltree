@@ -92,7 +92,7 @@ exports.login = function (req, res) {
         $password: req.body.password,
     };
     let stmt = database.db.prepare(sqlRequest);
-    stmt.run(sqlParams, function (err, rows) {
+    stmt.all(sqlParams, function (err, rows) {
         if (err) {
             res.json({ status: false, data: "Internal server error"});
         } else if (rows == null || rows.length == 0) {
