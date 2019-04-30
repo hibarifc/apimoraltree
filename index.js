@@ -56,6 +56,13 @@ app.listen(port, function () {
 var Institution = require('./table/Institution.js');
 var Activity = require('./table/Activity.js');
 var Department = require('./table/Department.js');
+var Faculty = require('./table/Faculty.js');
+var Member = require('./table/Member.js');
+var Moral_Activity = require('./table/Moral_Activity.js');
+var Moral_Tree = require('./table/Moral_Tree.js');
+var Moral = require('./table/Moral.js');
+var Participation = require('./table/Participation.js');
+var Tree_Growth = require('./table/Tree_Growth.js');
 
 /* Express configuration */
 app.use(bodyParser.urlencoded({extended: false}));
@@ -78,9 +85,7 @@ app.post('/api/Activity/deleteActivityById', function (req, res) {
 
 
 //------------------------------------  Department ------------------------------------------------------
-app.get('/api/Department/getDepartment', function (req, res) {
-    Department.getDepartment(req, res);
-});
+
 app.post('/api/Department/createDepartment', function (req, res) {
     Department.createDepartment(req, res);
 });
@@ -109,24 +114,15 @@ app.post('/api/Faculty/deleteFacultyById', function (req, res) {
 app.get('/api/Member/getMember', function (req, res) {
     Member.getMember(req, res);
 });
-app.post('/api/Member/createMember', function (req, res) {
-    Member.createMember(req, res);
-});
-app.post('/api/Member/updateMemberById', function (req, res) {
-    Member.updateMemberById(req, res);
-});
+
 app.post('/api/Member/deleteMemberById', function (req, res) {
     Member.deleteMemberById(req, res);
 });
 
 
 //------------------------------------  Moral_Activity ------------------------------------------------------
-app.get('/api/Moral_Activity/getMoral_Activity', function (req, res) {
-    Moral_Activity.getMoral_Activity(req, res);
-});
-app.post('/api/Moral_Activity/createMoral_Activity', function (req, res) {
-    Moral_Activity.createMoral_Activity(req, res);
-});
+
+
 app.post('/api/Moral_Activity/updateMoral_ActivityById', function (req, res) {
     Moral_Activity.updateMoral_ActivityById(req, res);
 });
@@ -167,9 +163,7 @@ app.post('/api/Moral/deleteMoralById', function (req, res) {
 app.get('/api/Participation/getParticipation', function (req, res) {
     Participation.getParticipation(req, res);
 });
-app.post('/api/Participation/createParticipation', function (req, res) {
-    Participation.createParticipation(req, res);
-});
+
 app.post('/api/Participation/updatParticipationById', function (req, res) {
     Participation.updateParticipationById(req, res);
 });
@@ -205,3 +199,61 @@ app.post('/api/institution/deleteInstitutionById', function (req, res) {
     Institution.deleteInstitutionById(req, res);
 });
 
+
+//---------------------------------- MODULE LOGIN  ---------------------------------------------------------
+app.post('/api/Member/login', function (req, res) {
+    Member.login(req, res);
+});
+
+
+//---------------------------------- MODULE REGISTER --------------------------------------------------------
+app.post('/api/Member/createMember', function (req, res) {
+    Member.createMember(req, res);
+});
+
+app.get('/api/Department/getDepartment', function (req, res) {
+    Department.getDepartment(req, res);
+});
+
+
+//---------------------------------- MODULE HOME  -----------------------------------------------------------
+app.post('/api/Participation/getParticipationById', function (req, res) {
+    Participation.getParticipationById(req, res);
+});
+
+
+//---------------------------------- MODULE ACTIVITY  -------------------------------------------------------
+app.get('/api/Moral_Activity/getMoral_Activity', function (req, res) {
+    Moral_Activity.getMoral_Activity(req, res);
+});
+
+
+//---------------------------------- MODULE SCANQRCODE  -----------------------------------------------------
+app.post('/api/Participation/createParticipation', function (req, res) {
+    Participation.createParticipation(req, res);
+});
+
+
+
+//---------------------------------- MODULE PROFILE  --------------------------------------------------------
+app.post('/api/Member/getMemberById', function (req, res) {
+    Member.getMemberById(req, res);
+});
+
+app.post('/api/Member/updateMemberById', function (req, res) {
+    Member.updateMemberById(req, res);
+});
+
+app.post('/api/Participation/getMypointById', function (req, res) {
+    Participation.getMypointById(req, res);
+});
+
+app.get('/api/Participation/getRanking', function (req, res) {
+    Participation.getRanking(req, res);
+});
+
+
+//---------------------------------- MODULE GENQRCODE  ------------------------------------------------------
+app.post('/api/Moral_Activity/createMoral_Activity', function (req, res) {
+    Moral_Activity.createMoral_Activity(req, res);
+});

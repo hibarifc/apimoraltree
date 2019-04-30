@@ -2,7 +2,7 @@
 var database = require('../config')
 
 exports.getMoral_Activity = function (req, res) {
-    var sqlRequest = "SELECT * FROM Moral_Activity";
+    var sqlRequest = "SELECT * FROM Moral_Activity LEFT JOIN Activity ON Activity.Act_ID = Moral_Activity.Act_ID LEFT JOIN Moral ON Moral.Moral_ID = Moral_Activity.Moral_ID";
     database.db.all(sqlRequest, function (err, rows) {
         if (err) {
             res.json({ status: false, data: "Internal server error"});
@@ -15,21 +15,69 @@ exports.getMoral_Activity = function (req, res) {
 }
 
 exports.createMoral_Activity = function (req, res) {
-    let sqlRequest = "INSERT into Moral_Activity (Ma_ID, QR_Photo, Moral_ID, Act_ID) VALUES ($Ma_ID, $QR_Photo, $Moral_ID, $Act_ID)";
-    let sqlParams = {
-        $Ma_ID: req.body.Ma_ID,
-        $QR_Photo: req.body.QR_Photo,
-        $Moral_ID: req.body.Moral_ID,
-        $Act_ID: req.body.Act_ID
-    };
-    let stmt = database.db.prepare(sqlRequest);
-    stmt.run(sqlParams, function (err) {
-        if (err) {
-            res.json({ status: false, data: "Entity not found" });
-        } else  {
-            res.json({ status: true});
-        } 
-    });
+    var sqlRequest = "SELECT count(*)as count FROM Activity";
+    var Activityid ;
+    database.db.all(sqlRequest, function (err, rows) {
+        Activityid = "A"+(rows[0].count+1)
+       
+        var sqlRequest = "INSERT into Activity (Act_ID, Act_Name, Act_Photo, Ins_ID) VALUES ($Act_ID, $Act_Name, $Act_Photo, $Ins_ID)";
+        let sqlParams = {
+            $Act_ID: Activityid,
+            $Act_Name: req.body.Act_Name,
+            $Act_Photo: req.body.Act_Photo,
+            $Ins_ID: req.body.Ins_ID,
+        };
+        let stmt = database.db.prepare(sqlRequest);
+        stmt.run(sqlParams, function (err) {
+
+            var sqlRequest = "SELECT count(*)as count FROM Moral";
+            var Moral_ID ;
+            database.db.all(sqlRequest, function (err, rows) {
+                Moral_ID = "Mo"+(rows[0].count+1)
+               
+                let sqlRequest = "INSERT into Moral (Moral_ID, Moral_Name, Moral_Description) VALUES ($Moral_ID, $Moral_Name, $Moral_Description)";
+                let sqlParams = {
+                    $Moral_ID: Moral_ID,
+                    $Moral_Name: req.body.Moral_Name,
+                    $Moral_Description: req.body.Moral_Description
+                };
+                let stmt = database.db.prepare(sqlRequest);
+                stmt.run(sqlParams, function (err) {
+
+                 
+                    var sqlRequest = "SELECT count(*)as count FROM Moral_Activity";
+                    var Moral_Activity_ID ;
+                    database.db.all(sqlRequest, function (err, rows) {
+                        Moral_Activity_ID = "Ma"+(rows[0].count+1)
+                    
+                        let sqlRequest = "INSERT into Moral_Activity (Ma_ID, QR_Photo, Moral_ID, Act_ID) VALUES ($Ma_ID, $QR_Photo, $Moral_ID, $Act_ID)";
+                        let sqlParams = {
+                            $Ma_ID: Moral_Activity_ID,
+                            $QR_Photo: req.body.QR_Photo,
+                            $Moral_ID: Moral_ID,
+                            $Act_ID: Activityid
+                        };
+                        let stmt = database.db.prepare(sqlRequest);
+                        stmt.run(sqlParams, function (err) {
+                            if (err) {
+                                res.json({ status: false, data: "Internal server error" });
+                            } else  {
+                                res.json({ status: true});
+                            } 
+                        
+                        
+                        });
+                
+                    })
+                
+                });
+        
+            })
+        
+        });
+
+    })
+
 }
 
 exports.updateMoral_ActivityById = function (req, res) {

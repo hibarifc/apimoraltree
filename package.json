@@ -1,7 +1,7 @@
 {
-    "name": "devahoy-nodejs",
+    "name": "api-moraltree",
     "version": "0.0.1",
-    "description": "Devahoy Node.js with Express",
+    "description": "api-moraltree",
     "main": "index.js",
     "private": true,
     "scripts": {
