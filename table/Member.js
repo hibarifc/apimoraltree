@@ -86,7 +86,10 @@ exports.deleteMemberById = function (req, res) {
 
 
 exports.login = function (req, res) {
-    let sqlRequest = "SELECT Member_ID, Member_Name, Member_Status,Dept_ID FROM Member WHERE username = $username AND password = $password";
+    let sqlRequest = `SELECT Member.Member_ID, Member.Member_Name, Member.Member_Status,Member.Dept_ID,Participation_Activity.Tree_ID
+    FROM Member 
+    LEFT JOIN Participation_Activity on Participation_Activity.Member_ID = Member.Member_ID
+    WHERE Member.username = $username AND Member.password = $password`;
     let sqlParams = {
         $username: req.body.username,
         $password: req.body.password,

@@ -47,11 +47,8 @@ exports.createMoral_Activity = function (req, res) {
                         res.json({ status: true, data:Activityid});
                     } 
                 });
-        
             })
-        
         });
-
     })
 
 }

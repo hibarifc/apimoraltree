@@ -78,14 +78,13 @@ exports.deleteParticipationById = function (req, res) {
 }
 
 exports.getParticipationById = function (req, res) {
-    var sqlRequest = "SELECT * FROM Participation_Activity LEFT JOIN Activity ON Activity.Act_ID = Participation_Activity.Act_ID  WHERE Member_ID = $Member_ID";
+    var sqlRequest = "SELECT SUM(Participation_Activity.score)as score FROM Participation_Activity LEFT JOIN Activity ON Activity.Act_ID = Participation_Activity.Act_ID  WHERE Member_ID = $Member_ID";
     let sqlParams = {
         $Member_ID:req.body.Member_ID,
     };
     let stmt = database.db.prepare(sqlRequest);
     stmt.all(sqlParams, function (err,rows) {
-        console.log(rows);
-        
+    
         if (err) {
             res.json({ status: false, data: "Internal server error"});
         } else if (rows == null || rows.length == 0) {
@@ -107,7 +106,6 @@ exports.getMypointById = function (req, res) {
     };
     let stmt = database.db.prepare(sqlRequest);
     stmt.all(sqlParams, function (err,rows) {
-        console.log(rows);
         
         if (err) {
             res.json({ status: false, data: "Internal server error"});
