@@ -48,7 +48,7 @@ app.get('/', function (req, res) {
     console.log('homestart ');
 });
 
-
+app.use(express.static('tree/tree1'));
 app.listen(port, function () {
     console.log('Starting node.js on port ' + port);
 });
@@ -67,6 +67,8 @@ var Tree_Growth = require('./table/Tree_Growth.js');
 /* Express configuration */
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+
 
 
 //------------------------------------  Activity ------------------------------------------------------
