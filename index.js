@@ -48,7 +48,7 @@ app.get('/', function (req, res) {
     console.log('homestart ');
 });
 
-app.use(express.static('tree/tree1'));
+app.use(express.static('tree'));
 app.listen(port, function () {
     console.log('Starting node.js on port ' + port);
 });
