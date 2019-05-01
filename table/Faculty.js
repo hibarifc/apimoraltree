@@ -6,7 +6,7 @@ exports.getFaculty = function (req, res) {
     database.db.all(sqlRequest, function (err, rows) {
         if (err) {
             res.json({ status: false, data: "Internal server error"});
-        } else if (rows === null || rows.length === 0) {
+        } else if (rows == null || rows.length == 0) {
             res.json({ status: false, data: "Entity not found" });
         } else {
             res.json({ status: true, data: rows });
