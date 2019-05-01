@@ -78,7 +78,7 @@ exports.deleteParticipationById = function (req, res) {
 }
 
 exports.getParticipationById = function (req, res) {
-    var sqlRequest = "SELECT SUM(Participation_Activity.score)as score,Participation_Activity.Tree_ID  FROM Participation_Activity LEFT JOIN Activity ON Activity.Act_ID = Participation_Activity.Act_ID  WHERE Member_ID = $Member_ID";
+    var sqlRequest = "SELECT SUM(Participation_Activity.score)as score,Participation_Activity.Tree_ID  FROM Participation_Activity LEFT JOIN Activity ON Activity.Act_ID = Participation_Activity.Act_ID  WHERE Participation_Activity.Member_ID = $Member_ID";
     let sqlParams = {
         $Member_ID:req.body.Member_ID,
     };
