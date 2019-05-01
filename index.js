@@ -87,7 +87,9 @@ app.post('/api/Activity/deleteActivityById', function (req, res) {
 
 
 //------------------------------------  Department ------------------------------------------------------
-
+app.get('/api/Department/getDepartment', function (req, res) {
+    Department.getDepartment(req, res);
+});
 app.post('/api/Department/createDepartment', function (req, res) {
     Department.createDepartment(req, res);
 });
@@ -99,9 +101,7 @@ app.post('/api/Department/deleteDepartmentById', function (req, res) {
 });
 
 //------------------------------------  Faculty ------------------------------------------------------
-app.get('/api/Faculty/getFaculty', function (req, res) {
-    Faculty.getFaculty(req, res);
-});
+
 app.post('/api/Faculty/createFaculty', function (req, res) {
     Faculty.createFaculty(req, res);
 });
@@ -212,9 +212,11 @@ app.post('/api/Member/login', function (req, res) {
 app.post('/api/Member/createMember', function (req, res) {
     Member.createMember(req, res);
 });
-
-app.get('/api/Department/getDepartment', function (req, res) {
-    Department.getDepartment(req, res);
+app.get('/api/Faculty/getFaculty', function (req, res) {
+    Faculty.getFaculty(req, res);
+});
+app.post('/api/Department/getDepartmentById', function (req, res) {
+    Department.getDepartmentById(req, res);
 });
 
 

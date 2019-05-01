@@ -63,3 +63,20 @@ exports.deleteDepartmentById = function (req, res) {
         } 
     });
 }
+
+exports.getDepartmentById = function (req, res) {
+    let sqlRequest = "SELECT * FROM Department WHERE Department.Fac_ID = $Fac_ID";
+    let sqlParams = {
+        $Fac_ID: req.body.Fac_ID,
+    };
+    let stmt = database.db.prepare(sqlRequest);
+    stmt.all(sqlParams, function (err,rows) {
+        if (err) {
+            res.json({ status: false, data: "Internal server error"});
+        } else if (rows == null || rows.length == 0) {
+            res.json({ status: false, data: "Entity not found" });
+        } else {
+            res.json({ status: true, data: rows });
+        }
+    });
+}
