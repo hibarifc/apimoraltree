@@ -5,8 +5,7 @@
     "main": "index.js",
     "private": true,
     "scripts": {
-      "preinstall": "npm i -g pm2",
-      "start": "pm2 start index.js"
+      "start": "node index.js"
     },
     "dependencies": {
         "node-pre-gyp":"*",
